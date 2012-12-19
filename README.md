@@ -1,4 +1,5 @@
-slides
-======
+# Compiegne.rb Slides
 
-Slides from c.rb speeches
+Slides are available online:
+
+- [Slides](http://compiegne-rb.github.com/slides)

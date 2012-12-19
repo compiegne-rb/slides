@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Compiegne.rb - Redis - 2012-12-20</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/compiegne.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+
+        <section>
+          <h1>REDIS</h1>
+          <h3>"an advanced key-value store"</h3>
+          <h4>Compiegne.rb - 2012-12-20</h4>
+          <p>
+            <small>Philippe Lafoucrière / <a href="http://www.tech-angels.com">Tech-Angels</a> / <a href="http://twitter.com/plafoucriere">@plafoucriere</a></small>
+          </p>
+        </section>
+
+        <section>
+          <h2>What is Redis?</h2>
+          <p>
+            From Redis homepage:
+            <blockquote cite="http://redis.io/">
+              Redis is an open source, advanced <strong>key-value store</strong>.
+              It is often referred to as a <strong>data structure server</strong> since keys can contain
+              <a href="http://redis.io/topics/data-types#strings">strings</a>,
+              <a href="http://redis.io/topics/data-types#hashes">hashes</a>,
+              <a href="http://redis.io/topics/data-types#lists">lists</a>,
+              <a href="http://redis.io/topics/data-types#sets">sets</a>
+              and <a href="http://redis.io/topics/data-types#sorted-sets">sorted sets</a>
+            </blockquote>
+          </p>
+
+          <p>Developed by Salvatore Sanfilippo / <a href="https://twitter.com/antirez">@antirez</a></p>
+          <p>Redis means <em>REmote DIctionary Server.</em></p>
+        </section>
+
+        <section>
+          <h2>What is really Redis?</h2>
+          <p>
+            <ul>
+              <li>A simple and lightweight daemon (Written in C).</li>
+              <li>In-memory database that persists on disk.</li>
+              <li>Incredibly fast</li>
+              <li>Atomic operations</li>
+              <li>Actively maintained</li>
+            </ul>
+          </p>
+
+          <aside class="notes">
+            Atomic: for most operations.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Supported data types</h2>
+          <p>
+            <ul>
+              <li>Strings</li>
+              <li>Hashes</li>
+              <li>Lists</li>
+              <li>Sets</li>
+              <li>Sorted Sets</li>
+            </ul>
+          </p>
+        </section>
+
+        <section>
+          <h2>Special features</h2>
+          <h4>Pub/Sub</h4>
+          <p>"Publish–subscribe pattern"</p>
+          <h4>Transactions</h4>
+          <p>
+            Using the <strong>MULTI</strong> and <strong>EXEC</strong> commands, it is possible to send several commands at once to Redis.
+            <br/>
+            Anyway, Redis transactions are very different from SQL transactions: In case of failure, there is NO rollback.
+            Commands are evaluated during queue process, and <strong>EXEC</strong> will refuse to run.
+          </p>
+          <h4>Scripting</h4>
+          <p>
+            "<strong>EVAL</strong> and <strong>EVALSHA</strong> are used to evaluate scripts using the Lua interpreter built into Redis starting from version 1.6.0."
+          </p>
+        </section>
+
+        <aside class="notes">
+           The point of transactions is only to send multiple commands at once to Redis.
+           "All the commands in a transaction are serialized and executed sequentially."
+           "Either all of the commands or none are processed, so a Redis transaction is also atomic."
+           "Starting with version 2.2: optimistic locking in a way very similar to a check-and-set (CAS) operation."
+        </aside>
+
+        <section>
+          <section>
+            <h2>Basic Commands</h2>
+            <p>
+              <pre><code contenteditable>
+redis 127.0.0.1:6379[1]> set mykey "compiegne RB"
+OK
+redis 127.0.0.1:6379[1]> get mykey
+"compiegne RB"
+            </code></pre>
+
+            <pre><code contenteditable>
+>> require 'rubygems'
+=> false
+>> require 'redis'
+=> true
+>> r = Redis.new
+=> #<Redis client v2.2.1 connected to redis://127.0.0.1:6379/0 (Redis v2.3.8)>
+>> r.ping
+=> "PONG"
+>> r.set('foo','bar')
+=> "OK"
+>> r.get('foo')
+=> "bar"
+            </code></pre>
+            </p>
+            <aside class="notes">
+              Using redis-cli, and redis gem.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Hashes</h2>
+            <p>
+              <pre><code contenteditable>
+> hset configuration secret_key donttellanyone
+(integer) 0
+> hget configuration secret_key
+"donttellanyone"
+              </code></pre>
+            </p>
+            <aside class="notes">
+              Using redis-cli only, as the syntax is shorter than ruby and 100% equivalent.
+              "redis 127.0.0.1:6379[1]" was removed to save space.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Lists</h2>
+            <p>
+              <pre><code contenteditable>
+> rpush my_queue "do_the_job:[123,\"another_params\"]"
+(integer) 1
+> rpop my_queue
+"do_the_job:[123,\"another_params\"]"
+> rpop my_queue
+(nil)
+              </code></pre>
+            </p>
+            <aside class="notes">
+              This is (almost) how Resque is working.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Sets</h2>
+            <p>
+              <pre><code contenteditable>
+> sadd user:123 "Dark Knight"
+(integer) 1
+> sadd user:123 "Abyss"
+(integer) 1
+> sadd user:123 "Abyss"
+(integer) 0
+> smembers user:123
+1) "Abyss"
+2) "Dark Knight"
+> sadd user:456 "Dark Knight"
+(integer) 1
+> sadd user:456 "Paul"
+(integer) 1
+> sinter user:123 user:456
+1) "Dark Knight"
+              </code></pre>
+            </p>
+            <aside class="notes">
+              (integer) 0 means the value was not set, yet, it's not an error.
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Common use cases</h2>
+            <p>
+              <ul>
+                <li>Counters</li>
+                <li>Queues</li>
+                <li>Cache</li>
+                <li>Chat / Real-time</li>
+                <li>Recommendation systems</li>
+                <li>Online users/friends</li>
+                <li>Statistics</li>
+                <li>Centralized configuration for clusters</li>
+              </ul>
+            </p>
+          </section>
+
+          <section>
+            <h2>Counters</h2>
+            <p>
+              <pre><code contenteditable>
+> incr package:123:downloads
+(integer) 1
+> incr package:123:downloads
+(integer) 2
+> incr package:123:downloads
+(integer) 3
+> incrby package:123:downloads 3
+(integer) 6
+              </code></pre>
+              Time complexity: O(1)
+            </p>
+          </section>
+
+          <section>
+            <h2>Message Queue</h2>
+            <p>
+              Connection A:
+              <pre><code contenteditable>
+> blpop job_queue 10
+1) "job_queue"
+2) "do_the_job:[123,\"another_params\"]"
+(2.87s)
+              </code></pre>
+              Connection B:
+              <pre><code contenteditable>
+> rpush job_queue "do_the_job:[123,\"another_params\"]"
+(integer) 1
+> rpush job_queue "do_the_job:[456,\"another_params\"]"
+(integer) 1
+> rpush job_queue "do_the_job:[789,\"another_params\"]"
+(integer) 2
+              </code></pre>
+              Time complexity: O(1)
+            </p>
+
+            <aside class="notes">
+              BLPOP is a blocking list pop primitive.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Online Friends</h2>
+            <p>
+              Set list of friends:
+              <pre><code contenteditable>
+> sadd user:123:friends 456 789
+(integer) 2
+> smembers user:123:friends
+1) "456"
+2) "789"
+              </code></pre>
+              After sign-in, add user id to a set (1 set every 10 minutes):
+              <pre><code contenteditable>
+> sadd online_users:2012-12-20-20:00 123 789
+(integer) 2
+> sinter  user:123:friends online_users:2012-12-20-20:00
+1) "789"
+              </code></pre>
+              Time complexity: O(1)
+            </p>
+
+            <aside class="notes">
+              Websockets or SSE are great for this too. This can be used for recommendation systems as well.
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <h2>Drawbacks</h2>
+          <p>
+            <ul>
+              <li>All data will reside in MEMORY</li>
+              <li>Persistence requires Redis RAM X3</li>
+              <li>No Map/Reduce</li>
+              <li>Another component in your architecture</li>
+              <li>No authentication</li>
+              <li>No named bases</li>
+            </ul>
+          </p>
+          <aside class="notes">
+            X3 in the worse scenario, X2 at least.
+          </aside>
+        </section>
+        <section>
+          <h2>Online Resources</h2>
+          <ul>
+            <li><a href="http://redis.io/">Redis homepage</a></li>
+            <li><a href="http://redis.io/topics/benchmarks">http://redis.io/topics/benchmarks</a></li>
+            <li><a href="http://www.paperplanes.de/2010/2/16/a_collection_of_redis_use_cases.html">A Collection Of Redis Use Cases</a></li>
+          </ul>
+        </section>
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
