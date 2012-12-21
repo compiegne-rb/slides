@@ -310,6 +310,8 @@ redis 127.0.0.1:6379[1]> get mykey
           </p>
           <aside class="notes">
             X3 in the worse scenario, X2 at least.
+            See "Background saving is failing with a fork() error under Linux even if I've a lot of free RAM!"
+            in http://redis.io/topics/faq for more details. overcommit_memory is defaulting to 0 on Debian.
           </aside>
         </section>
         <section>
