@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Compiegne.rb - Capybara - 2013-01-24</title>
+
+    <meta name="description" content="Presentation of Capybara for acceptance testing">
+    <meta name="author" content="Philippe Lafoucrière">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="theme/compiegne.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+
+        <section>
+          <h1>Capybara</h1>
+          <h3>"Acceptance test framework for web applications"</h3>
+          <h4>Compiegne.rb - 2013-01-24</h4>
+          <p>
+            <small>Philippe Lafoucrière / <a href="http://www.tech-angels.com">Tech-Angels</a> / <a href="http://twitter.com/plafoucriere">@plafoucriere</a></small>
+          </p>
+        </section>
+
+        <section>
+          <h2>What is Capybara?</h2>
+          <p>
+            From Capybara homepage:
+            <blockquote cite="http://redis.io/">
+              Capybara helps you test web applications by simulating how a real
+              user would interact with your app. It is agnostic about the
+              driver running your tests.</blockquote>
+          </p>
+          <p>
+            =&gt; Capybara is an abstraction layer between a Rack app and testing webdrivers.
+          </p>
+
+          <p>Developed by Jonas Nicklas / <a href="https://twitter.com/jonicklas">@jonicklas</a> / <a href="https://github.com/jnicklas">Github</a></p>
+        </section>
+
+        <section>
+          <h2>Testing like a boss</h2>
+          <img src="assets/2013-01-24-capybara/capybara.jpg"/>
+          <aside class="notes">
+            Capybara is also know as the biggest rodent in the world (over 60kg!).
+          </aside>
+        </section>
+
+        <section>
+          <h2>Jonas Nicklas</h2>
+          <p>
+            Jonas Nicklas is also the author of:
+            <ul>
+              <li><a href="https://github.com/jnicklas/carrierwave">CarrierWave</a></li>
+              <li><a href="https://github.com/jnicklas/turnip">Turnip</a></li>
+              <li><a href="https://github.com/jnicklas/evergreen">Evergreen</a></li>
+              <li>And many more <a href="https://github.com/jnicklas?tab=repositories">opensource contributions</a></li>
+            </ul>
+          </p>
+          <p>
+            One of the six <a href="http://rubyheroes.com/heroes">2011 Ruby Hero Award Winners</a>.
+          </p>
+
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h2>Testing your app</h2>
+          <p>
+            Testing apps has become one the most discussed subject in the last
+            years. Testing is fundamental because:
+          </p>
+          <ul>
+            <li>Your app will probably grow instead of getting thiner</li>
+            <li>Changing code will certainly cause side effects you didn't expect</li>
+            <li>Refactoring is easier</li>
+            <li>Maintenance is easier</li>
+            <li>it helps understanding the behavior of the app</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Different layers</h2>
+          <ul>
+            <li>Unit Testing</li>
+            <li>Functional Testing</li>
+            <li>Acceptance Testing</li>
+            <li>Integration Testing</li>
+          </ul>
+
+          <aside class="notes">
+            <p> Unit Testing: Specific methods/model/modules tests. Interaction
+              with other objects are stubbed.</p>
+            <p>Functional Testing: Test
+              controllers (and views if needed).  Interactions with 3rd party
+              services and models are stubbed. We're testing the routing of the
+              app here.</p>
+            <p>Acceptance Testing: Test all layers of the app (view =>
+              controller => model / module). 3rd party services are generally
+              stubbed.</p>
+            <p>Integration Testing: Test all layers of the app + 3rd party
+              services. Ie: A batch with a ftp connection to download files to
+              parse.</p>
+            <p>
+              Capybara may be used in Acceptance and Integration testing.
+            </p>
+          </aside>
+
+        </section>
+
+        <section>
+          <h2>Supported Drivers</h2>
+          <ul>
+            <li>RackTest (default, no js)</li>
+            <li>Selenium 2.0</li>
+            <li>Webkit <em>(headless)</em></li>
+            <li>Poltergeist <em>(headless)</em></li>
+          </ul>
+
+          <aside class="notes">
+            <p>
+              Since Capybara is an abstraction layer, the DSL is the same for all these drivers.
+              Therefore, they can be switched without changing tests.
+              RackTest is the fastest, but doesn't support javascript at all.
+            </p>
+          </aside>
+
+        </section>
+        <section>
+          <section>
+            <h2>Getting Started</h2>
+            <p>
+              Add capybara to your Gemfile and bundle it:
+              <pre><code contenteditable>
+  group :test do
+    gem 'rspec'
+    gem 'capybara'
+  end
+            </code></pre>
+            Require capybara in your spec helper:
+            <pre><code contenteditable>
+  require 'capybara/rails'
+  require 'capybara/rspec'
+            </code></pre>
+            Put your specs inside <code>spec/features</code>
+            </p>
+            <aside class="notes">
+              We're assuming for further examples that a rails app is being used.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Write your first scenario</h2>
+            <p>
+              <pre><code contenteditable>
+# spec/features/sign-in_spec.rb
+feature "Signing in" do
+  background do
+    @user = create :user, password: 'MyNameIsBond' # FactoryGirl Syntax
+  end
+
+  scenario "Signing in with correct credentials" do
+    visit '/users/sign_in'
+    within("#new_session") do
+      fill_in 'Nickname or email', with: @user.email
+      fill_in 'Password', :with => with: @user.password
+    end
+    click_button 'Sign in'
+    page.should have_content 'Success'
+  end
+end
+              </code></pre>
+            </p>
+          </section>
+          <section>
+            <h2>DSL - Navigating</h2>
+            <p>
+              <pre><code contenteditable>
+  visit('/projects')
+  visit(post_comments_path(post))
+              </code></pre>
+            </p>
+          </section>
+          <section>
+            <h2>DSL - Links and buttons</h2>
+            <p>
+              <pre><code contenteditable>
+  click_link('id-of-link')
+  click_link('Link Text')
+  click_button('Save')
+  click_on('Link Text') # clicks on either links or buttons
+  click_on('Button Value')
+              </code></pre>
+            </p>
+          </section>
+          <section>
+            <h2>DSL - Interacting with forms</h2>
+            <p>
+              <pre><code contenteditable>
+  fill_in('First Name', :with => 'John')
+  fill_in('Password', :with => 'Seekrit')
+  fill_in('Description', :with => 'Really Long Text...')
+  choose('A Radio Button')
+  check('A Checkbox')
+  uncheck('A Checkbox')
+  attach_file('Image', '/path/to/image.jpg')
+  select('Option', :from => 'Select Box')
+              </code></pre>
+            </p>
+          </section>
+          <section>
+            <h2>DSL - Querying DOM</h2>
+            <p>
+              <pre><code contenteditable>
+  page.has_selector?('table tr')
+  page.has_selector?(:xpath, '//table/tr')
+
+  page.has_xpath?('//table/tr')
+  page.has_css?('table tr.foo')
+  page.has_content?('foo')
+              </code></pre>
+            </p>
+          </section>
+
+          <section>
+            <h2>DSL - Scoping</h2>
+            <p>
+              <pre><code contenteditable>
+  within "table.companies" do
+    find(:xpath, "//a[@href='/companies/#{@company.id}']").click
+  end
+              </code></pre>
+            </p>
+          </section>
+          <section>
+            <h2>DSL - Scripting</h2>
+            <p>
+              <pre><code contenteditable>
+  page.execute_script("$('body').empty()")
+  result = page.evaluate_script('4 + 4');
+              </code></pre>
+            </p>
+            <aside class="notes">
+              Be careful with Scripting. Acceptance tests should test app behaviour, so exactly like a User would do.
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Testing Ajax</h2>
+            <p>
+              That's the beauty of Capybara, just use the right driver!
+              <a href="https://github.com/thoughtbot/capybara-webkit">Capybara-Webkit</a> is playing very nice with capybara, let's use it for our examples.
+            </p>
+            <p>
+              To start testing Ajax behaviours, simply add the webkit driver. First, let's add it to our Gemfile:
+              <pre><code contenteditable>
+    group :test do
+      gem 'rspec'
+      gem 'capybara'
+      gem 'capybara-webkit'
+    end
+             </code></pre>
+            </p>
+          </section>
+
+          <section>
+            <h2>Testing Ajax</h2>
+            <p>
+              Tell capybara to use the <code>webkit</code> driver when testing JS behaviour.
+              <pre><code contenteditable>
+  # spec_helper.rb
+
+  RSpec.configure do |config|
+    # [...]
+    Capybara.javascript_driver = :webkit
+  end
+             </code></pre>
+            </p>
+          </section>
+
+          <section>
+            <h2>Testing Ajax</h2>
+            <p>
+              Tell rspec to use the javascript_driver instead of the default_driver.
+              <pre><code contenteditable>
+describe 'admin/users', js: true do
+
+  context "index" do
+    before { admin_login }
+    before { @user = create :user }
+
+    it "should display user" do
+      visit '/admin/users'
+      within("#main_content") { click_on "View" } # <== Toggle a div
+      page.should have_content "User Details"
+      page.should have_content @user.email
+    end
+  end
+end
+             </code></pre>
+            </p>
+          </section>
+          <section>
+            <h2>Now the bad news... Transactions</h2>
+            <p>
+              Some drivers (like webkit) will run a server on a separate thread.
+              Therefore, transactions aren't "visible" in another context (thread).
+              This will cause some tests to fail with a <code>RecordNotFound</code> Exception
+            </p>
+            <p>
+              Short answer: like cucumber, you must use <a href="https://github.com/bmabey/database_cleaner">database_cleaner</a> instead of rspec transactions.
+            </p>
+          </section>
+        </section>
+        <section>
+          <h2>Going further</h2>
+          <p>
+            Another very nice project from Jonas Nicklas is <a href="https://github.com/jnicklas/turnip">Turnip</a>.
+            Turnip enables the use of <a href="https://github.com/cucumber/cucumber/wiki/Gherkin">Gherkin</a> (the cucumber syntax) directly in rspec, without having a dedicated env.
+          </p>
+          <p>
+            Turnip is using steps like cucumber, and can (and should) use capybara DSL:
+            <pre><code contenteditable>
+  step "I should be on the homepage" do
+    page.current_path.should == root_path
+  end
+
+  step "I should see the company :name in the table" do |name|
+    page.find('table.companies').should have_content name
+  end
+           </code></pre>
+          </p>
+          <aside class="notes">
+            Cucumber has its own specific environment (aka: "cucumber"), which needs a complete setup (db connection, etc.).
+          </aside>
+        </section>
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
