@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Compiegne.rb - Outils de développement - 2013-02-28</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="theme/compiegne.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="reveal.js/lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h1>Outils de dév.</h1>
+          <h3>Présentation succinte</h3>
+          <h4>Compiegne.rb - 2013-02-28</h4>
+          <p>
+            <small>Vincent Tabary / <a href="http://notso.fr">Notso.fr</a>
+          </p>
+          <p>
+            Github : <a href="https://github.com/vtabary">vtabary</a> / Twitter <a href="http://twitter.com/vtabary">@vtabary</a></small>
+          </p>
+        </section>
+        <section>
+          <h2>Introduction</h2>
+          <p>
+            <br />
+          </p>
+          <p>
+            Cette présentation n'en est pas une !
+          </p>
+          <ul>
+            <li class="fragment">C'est une liste</li>
+            <li class="fragment">C'est un survol</li>
+            <li class="fragment">C'est pour lancer un débat</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Introduction</h2>
+          <p>
+            <br />
+          </p>
+          <p>
+            Pour limiter le sujet, elle ne présentera pas :
+          </p>
+          <ul>
+            <li class="fragment">Les langages (Ruby, SASS, CoffeeScript, ...)</li>
+            <li class="fragment">Les frameworks (Compass, Angular.js, ...)</li>
+            <li class="fragment">Les outils de tests (Fabrication, RSpec, ...)</li>
+          </ul>
+          <p>
+            <br />
+          </p>
+          <p class="fragment">
+            Pour résumer, cette présentation va se limiter...
+          </p>
+          <p class="fragment">
+            à la <b>plateforme</b> de développement
+          </p>
+        </section>
+        <section>
+          <h2>Sommaire</h2>
+          <p>
+            <br />
+          </p>
+          <ol>
+            <li class="fragment">Systèmes</li>
+            <li class="fragment">IDE</li>
+            <li class="fragment">Ligne de commande</li>
+            <li class="fragment">Ruby / Ruby on Rails</li>
+          </ol>
+        </section>
+        <section>
+          <h2>Systèmes</h2>
+          <p>
+            <br />
+          </p>
+          <img src="./assets/2013-02-28-development-tools/OSDVPNovembre.jpg" />
+          <p>
+            Developpez.com - nov. 2011
+          </p>
+        </section>
+        <section>
+          <h2>IDE</h2>
+          <div class="fragment">
+            <h3>Eclipse / Aptana</h3>
+            <p>
+              <br />
+            </p>
+            <ul>
+              <li class="fragment">Sur la base du bien connu Eclipse.</li>
+              <li class="fragment">Aptana sous forme de plugin Eclipse ou en standalone</li>
+              <li class="fragment">Conçu pour les langages web</li>
+              <li class="fragment">Intégration Git</li>
+              <li class="fragment">Outils de déploiement pour EngineYard, Heroku </li>
+              <li class="fragment">Outils dédiés pour Ruby/Rails</li>
+              <li class="fragment">Support Windows / Linux / MacOS</li>
+              <li class="fragment">Gratuit</li>
+            </ul>
+            <br />
+            <p>
+              Eclipse : <a href="http://www.eclipse.org">http://www.eclipse.org</a><br/>
+              Aptana : <a href="http://www.aptana.com/">http://www.aptana.com</a><br/>
+            </p>
+          </div>
+        </section>
+        <section>
+          <h2>IDE</h2>
+          <h3>SublimeText</h3>
+          <p>
+            <br />
+          </p>
+          <ul>
+            <li class="fragment">Très rapide</li>
+            <li class="fragment">Nombreux raccourcis</li>
+            <li class="fragment">Gestion de plugins</li>
+            <li class="fragment">Support Windows / Linux / MacOS</li>
+            <li class="fragment">Outil généraliste</li>
+            <li class="fragment">Version d'essai / Payant (70$)</li>
+          </ul>
+          <br />
+          <p>
+            SublimeText : <a href="http://www.sublimetext.com">http://www.sublimetext.com</a><br/>
+          </p>
+        </section>
+        <section>
+          <h2>IDE</h2>
+          <h3>SublimeText</h3>
+          <img src="./assets/2013-02-28-development-tools/sublimetext.png" />
+        </section>
+        <section>
+          <h2>IDE</h2>
+          <h3>RubyMine</h3>
+          <p>
+            <br />
+          </p>
+          <ul>
+            <li class="fragment">Outil dédié à Ruby</li>
+            <li class="fragment">Analyse de syntaxe</li>
+            <li class="fragment">Syntaxe RubyDoc reconnue</li>
+            <li class="fragment">Intégration Git</li>
+            <li class="fragment">Support Windows / Linux / MacOS</li>
+            <li class="fragment">Version d'essai 30jrs / Payant (89/179 €HT)</li>
+          </ul>
+          <br />
+          <p>
+            RubyMine : <a href="http://www.jetbrains.com/ruby/">http://www.jetbrains.com/ruby/</a><br/>
+          </p>
+        </section>
+        <section>
+          <h2>Ligne de commande</h2>
+          <div class="fragment">
+            <h3>Screen</h3>
+            <p>
+              <br />
+            </p>
+            <p class="fragment">
+              screen est un executable en ligne de commande permettant de gérer plusieurs shell à partir d'un seul.<br />
+              Utile pour n'avoir qu'une seule connexion SSH par exemple.
+            </p>
+            <p>
+              <br />
+            </p>
+            <p>
+              Article : <a href="http://studio.jacksay.com/tutoriaux/systeme-linux/l-utilitaire-bash-screen">Prise en main</a>
+            </p>
+          </div>
+        </section>
+        <section>
+          <h2>Ruby</h2>
+          <div class="fragment">
+            <h3>Sextant</h3>
+            <p>
+              <br />
+            </p>
+            <p class="fragment">
+              Sous la forme d'une gem, il permet de liste la totalité des routes disponibles pour Rails en accédant à l'url /rails/routes
+            </p>
+            <p class="fragment">
+              <b>A noter :</b> la fonctionnalité est maintenant intégrée à Rails 4.0
+             </p>
+            <p>
+              <br />
+            </p>
+            <p>
+              Github : <a href="https://github.com/schneems/sextant">schneems/sextant</a>
+            </p>
+          </div>
+        </section>
+        <section>
+          <h2>Ruby</h2>
+          <h3>Sextant</h3>
+          <img src="./assets/2013-02-28-development-tools/sextant.png" />
+        </section>
+        <section>
+          <h2>Ruby</h2>
+          <h3>BetterErrors / RailsPanel</h3>
+          <p>
+            <br />
+          </p>
+          <p class="fragment">
+            Sous la forme d'une gem, il permet d'avoir un affichage des erreurs plus <s>joli</s> <b>ergonomique</b>.
+          </p>
+          <p>
+            <br />
+          </p>
+          <p>
+            BetterErrors : <a href="https://github.com/charliesome/better_errors">charliesome/better_errors</a><br />
+            RailsPanel : <a href="https://chrome.google.com/webstore/detail/railspanel/gjpfobpafnhjhbajcjgccbbdofdckggg">Plugin Chrome</a><br />
+            Railscast : <a href="http://railscasts.com/episodes/402-better-errors-railspanel">#402</a><br />
+          </p>
+        </section>
+        <section>
+          <h2>Ruby</h2>
+          <h3>BetterErrors / RailsPanel</h3>
+          <img src="./assets/2013-02-28-development-tools/bettererrors_1.png" />
+        </section>
+        <section>
+          <h2>Ruby</h2>
+          <h3>BetterErrors / RailsPanel</h3>
+          <img src="./assets/2013-02-28-development-tools/bettererrors_2.png" />
+        </section>
+        <section>
+          <h2>Ruby</h2>
+          <h3>BetterErrors / RailsPanel</h3>
+          <img src="./assets/2013-02-28-development-tools/railspanel.png" />
+        </section>
+        <section>
+          <h2>Conclusion</h2>
+          <p>
+            <br />
+          </p>
+          <p>
+            D'autres liens ? <br/>
+            D'autres logiciels ? <br />
+            Des préférences ?
+          </p>
+        </section>
+      </div>
+
+    </div>
+    <script src="reveal.js/lib/js/head.min.js"></script>
+    <script src="reveal.js/js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+  </body>
+</html>
