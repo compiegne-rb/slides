@@ -216,12 +216,70 @@
         </section>
         <section>
           <h2>Ruby</h2>
+          <h3>Pry</h3>
+          <p>
+            <br />
+          </p>
+          <p class="fragment">
+            Il peut être utiliser comme une console alternative à <br/>
+            `rails console` ou `irb`<br/>
+            avec une coloration syntaxique.
+          </p>
+          <p class="fragment">
+            Mais il implémente aussi des "bindings" au sein du code Ruby. Cela permet d'interrompre l'exécution pour interagir via une console.
+          </p>
+          <p>
+            <br />
+          </p>
+          <p>
+            Site : <a href="http://pryrepl.org/">http://pryrepl.org/</a><br />
+            Github : <a href="https://github.com/pry/pry">pry/pry</a><br />
+          </p>
+        </section>
+        <section>
+          <h2>Ruby</h2>
+          <h3>Pry</h3>
+          <p>
+            <br />
+          </p>
+          <pre><code contenteditable># test.rb
+require 'pry'
+
+class A
+  def hello() puts "hello world!" end
+end
+
+a = A.new
+
+# set x to 10
+x = 10
+
+# start a REPL session
+binding.pry
+
+# program resumes here (after pry session)
+puts "program resumes here. Value of x is: #{x}."</code></pre>
+        </section>
+        <section>
+          <h2>Ruby</h2>
           <h3>BetterErrors / RailsPanel</h3>
           <p>
             <br />
           </p>
           <p class="fragment">
             Sous la forme d'une gem, il permet d'avoir un affichage des erreurs plus <s>joli</s> <b>ergonomique</b>.
+          </p>
+          <p class="fragment">
+            Mais surtout, il permet :
+            <ul>
+              <li class="fragment">de parcourir la pile d'erreur</li>
+              <li class="fragment">voir le contenu des fonctions traversées</li>
+              <li class="fragment">propose une console interactive</li>
+              <li class="fragment">affiche la valeur des variables</li>
+              <li class="fragment">permet de voir les requêtes (Rails Panel)</li>
+              <li class="fragment">retrouver la dernière erreur</li>
+              <li class="fragment">...</li>
+            </ul>
           </p>
           <p>
             <br />
