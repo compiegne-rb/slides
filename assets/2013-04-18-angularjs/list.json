@@ -1,0 +1,22 @@
+[
+  {
+    "userId": 1,
+    "name": "Vincent",
+    "company": "Notso.fr"
+  },
+  {
+    "userId": 2,
+    "name": "Fabien",
+    "company": "Mingalar"
+  },
+  {
+    "userId": 3,
+    "name": "Aymeric",
+    "company": "Perfect Memory"
+  },
+  {
+    "userId": 4,
+    "name": "Philippe",
+    "company": "TechAngels"
+  }
+]
