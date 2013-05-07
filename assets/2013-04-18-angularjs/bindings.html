@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" ng-app>
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS : Bindings</title>
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <script src="jquery-1.9.1.min.js"></script>
+  <script src="angular.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Bindings</h1>
+    </header>
+
+
+
+    <p ng-init="myname = ''; fine = false; friends = ''">
+      Quel est votre nom ? <input type="text" ng-model="myname" />
+    </p>
+    <p>
+      Bonjour {{myname}} !
+    </p>
+
+
+
+
+    <div ng-show="myname">
+      <p>
+        Vous allez bien ? <input type="checkbox" ng-model="fine" />
+      </p>
+      <p ng-show="fine">
+        Tant mieux !
+      </p>
+      <p ng-show="!fine">
+        C'est bien dommage !
+      </p>
+
+
+
+      <div ng-show="fine">
+        <p>
+          Avec qui êtes vous ? <input type="text" ng-model="friends" ng-list />
+        </p>
+        <ul>
+          <li ng-repeat="friend in friends ">{{friend}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

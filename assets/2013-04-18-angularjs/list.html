@@ -1,0 +1,6 @@
+<h2>Liste des utilisateurs</h2>
+<ul>
+  <li ng-repeat="user in users">
+    <a ng-href="./{{user.userId}}">{{user.name}}</a>, {{user.company}}
+  </li>
+</ul>

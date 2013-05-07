@@ -1,0 +1,12 @@
+<p>
+  Bienvenue au {{location.name}} !
+</p>
+
+<p>
+  <input ng-model="date" ui-date /><br/>
+
+  Selected Date: {{ date }}<br/>
+  Formatted Date: {{ date | date: 'mediumDate'}}<br/>
+  Selected Month: {{ date.getMonth() }}<br/>
+  <div ng-model="date" ui-date></div>
+</p>
