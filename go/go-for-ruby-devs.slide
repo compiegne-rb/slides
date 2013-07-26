@@ -1,0 +1,176 @@
+From Ruby to Go
+
+Philippe Lafoucrière
+Tech-Angels
+http://www.tech-angels.com
+@plafoucriere
+http://www.meetup.com/compiegnerb/
+
+* Go
+
+- Open source (BSD) project
+- Officially announced in 2009
+- Statically typed compiled language
+- Garbage collector (memory-safe)
+- Awesome concurrency system (light threads)
+- Fast, I mean it, really
+- Light memory footprint
+- Available on Linux, Mac OS X, FreeBSD, OpenBSD, Plan 9, Windows and the i386, amd64, and ARM archs
+- Go compiled program are staticly linked, and don't need a vm or interpreter
+
+.link http://talks.golang.org/2012/chat.slide Origin talk slides and snippets by Andrew Gerrand
+
+* Go Tools
+
+- build (go build)
+- fetch (go get)
+- test (go test)
+- document (godoc)
+- profile
+- format (gofmt)
+- fix (go fix)
+- many more (like this presentation tool!)
+
+* Go is about composition
+
+Go is Object Oriented, but not in the usual way.
+
+- no classes (methods may be declared on any type)
+- no subtype inheritance
+- interfaces are satisfied implicitly (structural typing)
+
+The result: simple pieces connected by small interfaces.
+
+* Go is about concurrency
+
+Go provides CSP-like concurrency primitives.
+
+- lightweight threads (goroutines)
+- typed thread-safe communication and synchronization (channels)
+
+The result: comprehensible concurrent code.
+
+* Core values
+
+Go is about composition, concurrency, and gophers.
+
+.image chat/gophers.jpg
+
+Keep that in mind.
+
+* Hello, go
+
+.play chat/support/hello.go
+
+* A simple web server
+
+.play go-for-ruby-devs/hello_web_server.go
+
+* Memory footprint
+
+.image go-for-ruby-devs/ruby-mem.png
+.image go-for-ruby-devs/revel-mem.png
+.code go-for-ruby-devs/config.ru
+
+* Functions anatomy
+
+.image go-for-ruby-devs/func.png
+
+_Source:_"Learning_go"_book_
+
+* Interfaces
+
+Interface are implicit in Go. 
+Fprintln can write directly to a net.Conn, because it implements the Reader and Write interface.
+
+.code chat/support/defs.go /type.Reader/,/^}/
+.code chat/support/defs.go /type.Writer/,/^}/
+.code chat/support/defs.go /type.Conn/,/^}/
+
+* Goroutines
+
+Goroutines are lightweight threads that are managed by the Go runtime. To run a function in a new goroutine, just put `"go"` before the function call.
+
+.play chat/support/goroutines.go
+
+* Channels
+
+Goroutines communicate via channels. A channel is a typed conduit that may be synchronous (unbuffered) or asynchronous (buffered).
+
+.play chat/support/chan.go
+
+* Select
+
+A select statement is like a switch, but it selects over channel operations (and chooses exactly one of them).
+
+.play chat/support/select.go
+
+* Embedding
+
+.play go-for-ruby-devs/fruits.go
+
+* Similarities with ruby
+
+- closures
+- anonymous functions (lambdas)
+- ranges (iterators)
+- slices / map (Array / Hash)
+- test framework (Test::Unit)
+
+* Differences with ruby
+
+- no classes
+- packages instead of modules
+- methods visibility is implicit
+- no exceptions (errors)
+- interfaces
+- no inheritence / polymorphism
+- defering
+
+
+* Pros
+
+- no more waiting time (!!!)
+- memory / performance
+- language is easy to learn and get started
+- community (+ google)
+- go routines and channels are great
+- great tools
+
+* Cons
+
+- no package manager
+- no ternary operator (sic)
+- one-letter variable names
+- no REPL (but we have http://play.golang.org/)
+- young ecosystem
+
+
+* Revel - a powerful (mvc) web framework
+
+- based on play framework (java)
+- very modular
+- high performance and stable
+- batteries included (jobs queue, caching, sessions, routing, etc.)
+
+.link http://robfig.github.io/revel/
+
+* Further reading
+
+All about Go:
+
+.link http://golang.org
+
+Slides from other talks:
+
+.link http://talks.golang.org/
+
+"Go Concurrency Patterns" by Rob Pike:
+
+.link http://golang.org/s/concurrency-patterns
+
+Books:
+
+.link http://www.golang-book.com/
+.link http://www.miek.nl/projects/learninggo/
+
